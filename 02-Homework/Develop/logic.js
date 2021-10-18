@@ -1,5 +1,3 @@
-let planner = [];
-
 function formatDate() {
   const date = new Date();
   const year = date.getFullYear();
@@ -16,8 +14,14 @@ function formatDate() {
 
 $(".time-block").each(function (data) {
   // getting each blocks set time by taking in data and adding 9
-  const time = (data += 9);
+  let id = `hour-${data + 9}`;
+  debugger;
 
+  let workPlease = JSON.parse(localStorage.getItem(id));
+  $(id).parent().children().val(workPlease.text);
+
+  const time = (data += 9);
+  console.log(time);
   // getting current hour
   const date = new Date();
   const hour = date.getHours();
@@ -41,7 +45,6 @@ $(".saveBtn").on("click", function (event) {
   event.preventDefault();
 
   const val = $(this).siblings("textarea").eq(0).val().trim();
-  // retrieve the id from the parent
   const id = $(this).parent().attr("id");
   const data = { time: id, text: val };
 
