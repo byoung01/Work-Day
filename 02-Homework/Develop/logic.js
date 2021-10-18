@@ -13,15 +13,16 @@ function formatDate() {
 }
 
 $(".time-block").each(function (data) {
-  // getting each blocks set time by taking in data and adding 9
   let id = `hour-${data + 9}`;
-  debugger;
-
+  //using id to search in the local storage
   let workPlease = JSON.parse(localStorage.getItem(id));
-  $(id).parent().children().val(workPlease.text);
-
+  //if workplease is true it adds text to the textarea
+  if (workPlease) {
+    id = `#hour-${data + 9}`;
+    $(id).find("textarea").val(workPlease.text);
+  }
+  // getting each blocks set time by taking in data and adding 9
   const time = (data += 9);
-  console.log(time);
   // getting current hour
   const date = new Date();
   const hour = date.getHours();
@@ -46,17 +47,10 @@ $(".saveBtn").on("click", function (event) {
 
   const val = $(this).siblings("textarea").eq(0).val().trim();
   const id = $(this).parent().attr("id");
-  const data = { time: id, text: val };
+  const data = { text: val };
 
   localStorage.setItem(id, JSON.stringify(data));
-  console.log(data);
 });
-
-// const saved = () => {
-//]
-// };
-
-// saved();
 
 setInterval(function () {
   formatDate();
