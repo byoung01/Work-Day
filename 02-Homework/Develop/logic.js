@@ -1,6 +1,4 @@
-var activities = document.querySelector("textarea");
-var data = JSON.parse(localStorage.getItem("day-schedule"));
-var headerTime = document.querySelector("h2");
+let planner = [];
 
 function formatDate() {
   const date = new Date();
@@ -34,6 +32,7 @@ $(".time-block").each(function (data) {
     $("textarea").addClass("bg-warning");
   }
 });
+
 function pageLoad() {
   activities.append(data);
 }
@@ -41,11 +40,22 @@ function pageLoad() {
 $(".saveBtn").on("click", function (event) {
   event.preventDefault();
 
-  console.log(userText);
-  localStorage.setItem("day-schedule", JSON.stringify(data));
+  const val = $(this).siblings("textarea").eq(0).val().trim();
+  // retrieve the id from the parent
+  const id = $(this).parent().attr("id");
+  const data = { time: id, text: val };
+
+  localStorage.setItem(id, JSON.stringify(data));
+  console.log(data);
 });
 
-// setInterval(function () {
-//   formatDate();
-//   $("#currentDay").text(formatDate);
-// }, 1000);
+// const saved = () => {
+//]
+// };
+
+// saved();
+
+setInterval(function () {
+  formatDate();
+  $("#currentDay").text(formatDate);
+}, 1000);
